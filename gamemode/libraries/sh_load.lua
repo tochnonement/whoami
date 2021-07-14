@@ -11,12 +11,18 @@ whoi.load = {}
 
 local load = whoi.load
 
+---Include file on serverside
+---@param path string
+---@return any
 function load.server(path)
     if SERVER then
         return include(path)
     end
 end
 
+---Include file on clientside
+---@param path string
+---@return any
 function load.client(path)
     if SERVER then
         AddCSLuaFile(path)
@@ -25,6 +31,9 @@ function load.client(path)
     end
 end
 
+---Include file on serverside & clientside (Shared)
+---@param path string
+---@return any
 function load.shared(path)
     if SERVER then
         AddCSLuaFile(path)
@@ -34,6 +43,9 @@ function load.shared(path)
     end
 end
 
+---Include file depending on it's prefix
+---@param path string
+---@return any
 function load.auto(path)
     local prefix = string.match(path, "/(%l+)_")
 
