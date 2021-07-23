@@ -19,6 +19,21 @@ local models = {
     "models/player/Group01/male_09.mdl"
 }
 
+function GM:PlayerInitialSpawn(ply)
+    whoi.playersQueue:Push(ply)
+end
+
+function GM:PlayerDisconnected(ply)
+    local queue = whoi.playersQueue
+
+    for index, member in ipairs(queue:Items()) do
+        if member == ply then
+            queue:Remove(index)
+            break
+        end
+    end
+end
+
 function GM:PlayerSpawn(ply)
     local model = table.Random(models)
 
@@ -41,3 +56,5 @@ function GM:PlayerSetHandsModel(ply, ent)
         ent:SetBodyGroups(info.body)
     end
 end
+
+-- PrintTable(whoi.playersQueue:Items())
