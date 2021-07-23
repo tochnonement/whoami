@@ -17,13 +17,14 @@ local scale = whoi.scale
 ---@param reference number
 ---@return number
 function scale.width(value, reference)
+    reference = reference or 1600
+
     local key = "w" .. value .. "/" .. reference
     local stored = scale.cache[key]
 
     if stored then
         return stored
     else
-        reference = reference or 1600
 
         local new = value / reference * ScrW()
 
@@ -38,14 +39,14 @@ end
 ---@param reference number
 ---@return number
 function scale.height(value, reference)
+    reference = reference or 900
+
     local key = "h" .. value .. "/" .. reference
     local stored = scale.cache[key]
 
     if stored then
         return stored
     else
-        reference = reference or 900
-
         local new = value / reference * ScrH()
 
         scale.cache[key] = new
