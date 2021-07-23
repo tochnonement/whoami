@@ -10,7 +10,39 @@ Email: tochonement@gmail.com
 PANEL = {}
 
 function PANEL:Init()
+    self.lblTitle = self:Add("DLabel")
+    self.lblTitle:SetText("Choose a word")
+    self.lblTitle:SetExpensiveShadow(1, ColorAlpha(color_black, 200))
+    self.lblTitle:SetFont(whoi.font.create("Roboto@48"))
+    self.lblTitle:SetTextColor(color_white)
+    self.lblTitle:SetContentAlignment(5)
+    self.lblTitle:SizeToContentsY()
+
+    self.lblTimer = self:Add("DLabel")
+    self.lblTimer:SetText("0:40")
+    self.lblTimer:SetExpensiveShadow(1, ColorAlpha(color_black, 200))
+    self.lblTimer:SetFont(whoi.font.create("Roboto Bk@36"))
+    self.lblTimer:SetTextColor(color_white)
+    self.lblTimer:SetContentAlignment(8)
+    self.lblTimer.Think = function(panel)
+        local endTime = self.endTime
+
+        if endTime then
+            local remain = endTime - CurTime()
+
+            panel:SetText(string.FormattedTime(remain, "%02i:%02i:%02i"))
+        end
+    end
+
     self.cards = {}
+end
+
+function PANEL:PerformLayout(w, h)
+    self.lblTitle:Dock(TOP)
+    self.lblTitle:SetTall(h * 0.1)
+
+    self.lblTimer:Dock(TOP)
+    self.lblTimer:SetTall(h * 0.1)
 end
 
 function PANEL:Paint(w, h)
@@ -45,17 +77,24 @@ function PANEL:UpdateCards()
     end
 end
 
+function PANEL:StartTimer(time)
+    self.endTime = CurTime() + time
+end
+
 vgui.Register("whoi.CardSelection", PANEL)
 
 -- ANCHOR Test
 
-if DebugPanel and IsValid(DebugPanel) then
-    DebugPanel:Remove()
-end
+-- if DebugPanel and IsValid(DebugPanel) then
+--     DebugPanel:Remove()
+-- end
 
-DebugPanel = vgui.Create("whoi.CardSelection")
-DebugPanel:SetSize(ScrW(), ScrH())
-DebugPanel:MakePopup()
-DebugPanel:AddCard("cucumber")
-DebugPanel:AddCard("tomato")
-DebugPanel:AddCard("carrot")
+-- local choices = whoi.word.getRandom(3)
+
+-- DebugPanel = vgui.Create("whoi.CardSelection")
+-- DebugPanel:SetSize(ScrW(), ScrH())
+-- DebugPanel:MakePopup()
+-- DebugPanel:AddCard(choices[1])
+-- DebugPanel:AddCard(choices[2])
+-- DebugPanel:AddCard(choices[3])
+-- DebugPanel:StartTimer(15)
