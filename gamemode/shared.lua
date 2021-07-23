@@ -16,10 +16,12 @@ GM.Version = "0.0.1"
 
 whoi.load.auto("libraries/thirdparty/sh_pon.lua")
 whoi.load.auto("libraries/thirdparty/cl_circle.lua")
+whoi.load.auto("libraries/thirdparty/cl_blur.lua")
 
 whoi.load.auto("libraries/sh_util.lua")
 whoi.load.auto("libraries/cl_webicon.lua")
 whoi.load.auto("libraries/cl_scale.lua")
+whoi.load.auto("libraries/cl_font.lua")
 whoi.load.auto("libraries/sh_netez.lua")
 whoi.load.auto("libraries/sh_word.lua")
 whoi.load.auto("libraries/sh_queue.lua")
