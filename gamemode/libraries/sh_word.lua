@@ -19,6 +19,7 @@ WORD.__index = WORD
 
 whoi.util.accessor(WORD, "name")
 whoi.util.accessor(WORD, "category")
+whoi.util.accessor(WORD, "image")
 
 function WORD:Translate(language, translate)
     return self
@@ -53,4 +54,31 @@ function word.load()
     for _, v in ipairs(addonPacks) do
         whoi.load.shared(addonPacksPath .. v)
     end
+end
+
+function word.getRandom(count)
+    local storage = word.storage
+    local result = {}
+
+    if table.Count(storage) < count then
+        error("You're trying to get too many words, this count doesn't exist")
+        return false
+    end
+
+    repeat
+        local randomWord = table.Random(storage)
+        local randomWordID = randomWord.id
+
+        for _, id in ipairs(result) do
+            if id == randomWordID then
+                goto skip
+            end
+        end
+
+        table.insert(result, randomWordID)
+
+        ::skip::
+    until (#result == count)
+
+    return result
 end
