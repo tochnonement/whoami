@@ -9,6 +9,7 @@ Email: tochonement@gmail.com
 
 local colorBg = Color(230, 206, 156)
 local colorOutline = Color(143, 116, 45)
+local colorHighlight = Color(241, 196, 15)
 local outlineStrength = 3
 
 PANEL = {}
@@ -20,8 +21,20 @@ function PANEL:Init()
 
     self.lblTitle = self.divTitle:Add("DLabel")
     self.lblTitle:SetTextColor(color_black)
-    self.lblTitle:SetFont("DermaLarge")
+    self.lblTitle:SetFont(whoi.font.create("Roboto Bk@32"))
     self.lblTitle:SetContentAlignment(5)
+
+    self.lblCategory = self.divTitle:Add("DLabel")
+    self.lblCategory:SetTextColor(color_black)
+    self.lblCategory:SetFont(whoi.font.create("Roboto@20"))
+    self.lblCategory:SetContentAlignment(5)
+
+    self.button = self:Add("DButton")
+    self.button:SetText("")
+    self.button.Paint = nil
+    self.button.Think = function(panel)
+        self.hovered = panel:IsHovered()
+    end
 end
 
 function PANEL:PerformLayout(w, h)
@@ -31,6 +44,9 @@ function PANEL:PerformLayout(w, h)
     self.divTitle:SetTall(h * .2)
 
     self.lblTitle:Dock(TOP)
+    self.lblCategory:Dock(TOP)
+
+    self.button:SetSize(w, h)
 
     local radius = self.divCircle:GetWide() * 0.33
     if radius >= 1 then
@@ -43,6 +59,10 @@ function PANEL:Paint(w, h)
 
     draw.RoundedBox(16, 0, 0, w, h, colorOutline)
     draw.RoundedBox(16, outlineStrength, outlineStrength, w - (outlineStrength * 2), h - (outlineStrength * 2), colorBg)
+
+    if self.hovered then
+        draw.RoundedBox(16, outlineStrength, outlineStrength, w - (outlineStrength * 2), h - (outlineStrength * 2), ColorAlpha(colorHighlight, math.abs(math.sin(CurTime() * 3)) * 200))
+    end
 
     draw.NoTexture()
     surface.SetDrawColor(colorOutline)
@@ -66,6 +86,9 @@ function PANEL:SetWord(id)
         self.lblTitle:SetText(word:GetName())
         self.lblTitle:SizeToContentsY()
 
+        self.lblCategory:SetText(word:GetCategory())
+        self.lblCategory:SizeToContentsY()
+
         if image then
             self.webIconName = whoi.webicon.create(image, "smooth mips")
         end
@@ -74,6 +97,10 @@ end
 
 function PANEL:Show()
     local w, h = self:GetSize()
+    local x0, y0 = self:GetPos()
+
+    x0 = x0 + w / 2
+    y0 = y0 + h / 2
 
     self.animStarted = true
     self.animProgress = 0
@@ -81,7 +108,9 @@ function PANEL:Show()
     self:Center()
     self.target = {
         w = w,
-        h = h
+        h = h,
+        x0 = x0,
+        y0 = y0
     }
 end
 
@@ -90,11 +119,13 @@ function PANEL:Think()
         local speed = FrameTime() * 3
         local w = self.target.w
         local h = self.target.h
+        local x0 = self.target.x0
+        local y0 = self.target.y0
 
         self.animProgress = Lerp(speed, self.animProgress, 1)
 
         self:SetSize(w * self.animProgress, h * self.animProgress)
-        self:Center()
+        self:SetPos(x0 - self:GetWide() / 2, y0 - self:GetTall() / 2)
     end
 end
 
