@@ -67,4 +67,15 @@ if CLIENT then
             process(vgui.GetWorldPanel(), class, callback)
         end
     end
+
+    do
+        local colorShadow = ColorAlpha(color_black, 200)
+
+        function lib.shadowText(text, font, x, y, color, alignmentX, alignmentY, shadowDistance)
+            shadowDistance = shadowDistance or 1
+
+            draw.SimpleText(text, font, x, y + shadowDistance, colorShadow, alignmentX, alignmentY)
+            return draw.SimpleText(text, font, x, y, color, alignmentX, alignmentY)
+        end
+    end
 end
