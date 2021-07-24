@@ -37,3 +37,24 @@ do
         getter(tbl, key, name, force)
     end
 end
+
+if CLIENT then
+    do
+        local function process(panel, class, callback)
+            for _, child in ipairs(panel:GetChildren()) do
+                if child.ClassName == class then
+                    if IsValid(child) then
+                        callback(child)
+                    end
+                    return
+                else
+                    process(child, class, callback)
+                end
+            end
+        end
+
+        function lib.findPanel(class, callback)
+            process(vgui.GetWorldPanel(), class, callback)
+        end
+    end
+end

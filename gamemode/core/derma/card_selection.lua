@@ -55,6 +55,9 @@ end
 function PANEL:AddCard(word)
     local card = self:Add("whoi.WordCard")
     card:SetWord(word)
+    card.button.DoClick = function()
+        self:OnCardSelected(card.word.id)
+    end
 
     table.insert(self.cards, card)
 
@@ -79,6 +82,10 @@ end
 
 function PANEL:StartTimer(time)
     self.endTime = CurTime() + time
+end
+
+function PANEL:OnCardSelected(id)
+    
 end
 
 vgui.Register("whoi.CardSelection", PANEL)

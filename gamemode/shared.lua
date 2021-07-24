@@ -25,10 +25,12 @@ whoi.load.auto("libraries/cl_font.lua")
 whoi.load.auto("libraries/sh_netez.lua")
 whoi.load.auto("libraries/sh_word.lua")
 whoi.load.auto("libraries/sh_queue.lua")
+whoi.load.auto("libraries/sv_round.lua")
 
 whoi.load.auto("core/sv_core.lua")
 whoi.load.auto("core/sv_hooks.lua")
 whoi.load.auto("core/cl_hooks.lua")
+whoi.load.auto("core/sv_net.lua")
 whoi.load.auto("core/cl_net.lua")
 
 whoi.word.load()
