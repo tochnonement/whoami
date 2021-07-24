@@ -15,6 +15,6 @@ netez.register("SelectWord")
 
     if (whoi.round.getState() == whoi.state.PREPARING) and (whoi.round.getWisher() == ply) and word then
         whoi.round.selectWord(wordId)
-        whoi.util.print(ply:Name() .. " selected word: " .. word:GetName())
+        whoi.util.print(ply:Name() .. " selected word: " .. word.id)
     end
 end)
