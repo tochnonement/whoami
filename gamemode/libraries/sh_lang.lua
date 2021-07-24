@@ -33,8 +33,12 @@ if CLIENT then
     function lang.load(id)
         local path = getPath(id)
 
-        if id ~= "english" and file.Exists(path, "LUA") then
-            lang.storage = include(path)
+        if id == referenceLanguage then
+            lang.storage = {}
+        else
+            if file.Exists(path, "LUA") then
+                lang.storage = include(path)
+            end
         end
 
         lang.current = id
@@ -80,7 +84,7 @@ if CLIENT then
             end
         end
 
-        return text
+        return text or id
     end
 
     function lang.addPhrase(langId, id, text)
