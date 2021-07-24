@@ -34,3 +34,7 @@ end
 function round.getState()
     return whoi.netvar.getGlobal("roundState", whoi.state.IDLE)
 end
+
+function round.getRemainTime()
+    return whoi.netvar.getGlobal("roundEndTime") - CurTime()
+end

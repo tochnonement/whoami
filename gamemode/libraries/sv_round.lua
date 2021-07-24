@@ -48,6 +48,7 @@ function round.start()
     local makingWish = getRandomExceptOne(queue:Items(), nextGuesser)
     -- Get three random choices
     local choices = whoi.word.getRandom(3)
+    local choiceTime = 15
 
     round.setGuesser(nextGuesser)
     round.setWisher(makingWish)
@@ -57,9 +58,9 @@ function round.start()
     whoi.util.print("Wisher: ", makingWish:Name())
 
     -- Send to a wisher menu, where he can choose a word
-    netez.send(makingWish, "ChooseWordMenu", choices)
+    netez.send(makingWish, "ChooseWordMenu", choices, choiceTime)
 
-    timer.Create("PickRandomWord", 15, 1, function()
+    timer.Create("whoi.PickRandomWord", choiceTime, 1, function()
         local choice = whoi.word.getRandom(1)[1]
         round.selectWord(choice)
     end)
@@ -74,14 +75,16 @@ end
 
 function round.selectWord(wordId)
     local respondents = round.getRespondents()
-    local word = whoi.word.get(wordId)
 
-    netez.send(respondents, "Notification", "Word chosen: " .. word:GetName(), 0, 2)
+    netez.send(respondents, "SendWordToRespondents", wordId)
     netez.send(round.getWisher(), "CloseWordSelectionMenu")
 
-    round.setState(whoi.state.STARTED)
+    round.word = whoi.word.get(wordId)
 
-    timer.Remove("PickRandomWord")
+    round.setState(whoi.state.STARTED)
+    round.startTimer(300)
+
+    timer.Remove("whoi.PickRandomWord")
 end
 
 function round.setState(state)
@@ -96,13 +99,29 @@ function round.setGuesser(ply)
     whoi.netvar.setGlobal("guesser", ply)
 end
 
+function round.startTimer(time)
+    whoi.netvar.setGlobal("roundEndTime", CurTime() + time)
+
+    timer.Create("whoi.AutoFinish", time, 1, function()
+        round.finish()
+    end)
+end
+
 function round.finish()
-    timer.Remove("PickRandomWord")
+    timer.Remove("whoi.PickRandomWord")
+    timer.Remove("whoi.AutoFinish")
 
     round.setGuesser(nil)
     round.setWisher(nil)
     round.setState(whoi.state.IDLE)
 end
+
+hook.Add("PlayerDisconnected", "whoi.round.Check", function(ply)
+    if round.getGuesser() == ply then
+        round.finish()
+        whoi.util.print("Round finished, because guesser has left")
+    end
+end)
 
 timer.Create("whoi.round.Controller", 1, 0, function()
     local isReadyToContinue = checkReadyToContinue()
@@ -121,3 +140,5 @@ timer.Create("whoi.round.Controller", 1, 0, function()
         end
     end
 end)
+
+-- round.finish()
