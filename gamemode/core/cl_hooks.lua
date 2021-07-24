@@ -137,21 +137,23 @@ function GM:HUDShouldDraw(name)
     return true
 end
 
-timer.Create("whoi.MusicLoop", 1, 0, function()
-    local music = whoi.music
+hook.Add("PostGamemodeLoaded", "whoi.StartMusicLoopTimer", function()
+    timer.Create("whoi.MusicLoop", 1, 0, function()
+        local music = whoi.music
 
-    if music and IsValid(music) then
-        if music:GetState() ~= GMOD_CHANNEL_PLAYING then
-            music:Play()
-        end
-    else
-        sound.PlayFile("sound/whoi/music.mp3", "noplay", function(station, error)
-            if IsValid(station) then
-                station:SetVolume(0.1)
-                station:Play()
-
-                whoi.music = station
+        if IsValid(music) then
+            if music:GetState() ~= GMOD_CHANNEL_PLAYING then
+                music:Play()
             end
-        end)
-    end
+        else
+            sound.PlayFile("sound/whoami/music.mp3", "noplay", function(station, error)
+                if IsValid(station) then
+                    whoi.music = station
+
+                    station:SetVolume(0.1)
+                    station:Play()
+                end
+            end)
+        end
+    end)
 end)
