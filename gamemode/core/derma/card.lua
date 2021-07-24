@@ -68,10 +68,10 @@ function PANEL:Paint(w, h)
     surface.SetDrawColor(colorOutline)
     circle()
 
-    if self.webIconName then
+    if self.webIconId then
         local radius = circle:GetRadius()
 
-        whoi.webicon.draw(self.webIconName, circle:GetX() - radius / 2, circle:GetY() - radius / 2, radius, radius)
+        whoi.webicon.draw(self.webIconId, circle:GetX() - radius / 2, circle:GetY() - radius / 2, radius, radius)
     end
 end
 
@@ -79,8 +79,6 @@ function PANEL:SetWord(id)
     local word = whoi.word.get(id)
 
     if word then
-        local image = word:GetImage()
-
         self.word = word
 
         self.lblTitle:SetText(word:GetName())
@@ -89,9 +87,7 @@ function PANEL:SetWord(id)
         self.lblCategory:SetText(word:GetCategory())
         self.lblCategory:SizeToContentsY()
 
-        if image then
-            self.webIconName = whoi.webicon.create(image, "smooth mips")
-        end
+        self.webIconId = word:PrepareImage()
     end
 end
 

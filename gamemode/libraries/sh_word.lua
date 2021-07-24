@@ -19,10 +19,24 @@ WORD.__index = WORD
 
 whoi.util.accessor(WORD, "name")
 whoi.util.accessor(WORD, "category")
-whoi.util.accessor(WORD, "image")
+whoi.util.accessor(WORD, "imageUrl")
 
 function WORD:Translate(language, translate)
     return self
+end
+
+if CLIENT then
+    function WORD:PrepareImage()
+        local url = self:GetImageUrl()
+
+        if url then
+            local webIconId = whoi.webicon.create(url, "smooth mips")
+
+            self.image = webIconId
+
+            return webIconId
+        end
+    end
 end
 
 -- ANCHOR Functions
