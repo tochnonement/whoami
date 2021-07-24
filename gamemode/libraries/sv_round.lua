@@ -8,6 +8,7 @@ Email: tochonement@gmail.com
 --]]
 
 whoi.round = whoi.round or {}
+whoi.round.votes = whoi.round.votes or {}
 
 local round = whoi.round
 
@@ -52,6 +53,7 @@ function round.start()
 
     round.setGuesser(nextGuesser)
     round.setWisher(makingWish)
+    round.setVotes(0)
     round.setState(whoi.state.PREPARING)
 
     whoi.util.print("Guesser: ", nextGuesser:Name())
@@ -99,6 +101,28 @@ function round.setGuesser(ply)
     whoi.netvar.setGlobal("guesser", ply)
 end
 
+function round.setVotes(count)
+    whoi.netvar.setGlobal("voteCount", count)
+end
+
+function round.addVote(ply)
+    local count = round.getVotes()
+    local votes = round.votes
+    local new = count + 1
+
+    if not votes[ply] then
+        round.setVotes(new)
+
+        votes[ply] = true
+
+        hook.Run("whoi.VoteCountChanged", new)
+
+        return true
+    end
+
+    return false
+end
+
 function round.startTimer(time)
     whoi.netvar.setGlobal("roundEndTime", CurTime() + time)
 
@@ -114,12 +138,20 @@ function round.finish()
     round.setGuesser(nil)
     round.setWisher(nil)
     round.setState(whoi.state.IDLE)
+
+    round.votes = {}
 end
 
 hook.Add("PlayerDisconnected", "whoi.round.Check", function(ply)
     if round.getGuesser() == ply then
         round.finish()
         whoi.util.print("Round finished, because guesser has left")
+    end
+end)
+
+hook.Add("whoi.VoteCountChanged", "whoi.round.Check", function(new)
+    if new == round.getRequiredVoteCount() then
+        round.finish()
     end
 end)
 

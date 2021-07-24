@@ -32,3 +32,16 @@ netez.register("SelectModel")
         whoi.util.notify(ply, "YouChangedModel", 0, 2)
     end
 end)
+
+netez.register("Vote")
+:SetDelay(1)
+:SetCallback(function(ply)
+    if (whoi.round.getGuesser() ~= ply) then
+        local bool = whoi.round.addVote(ply)
+        if bool then
+            whoi.util.notify(ply, "YouVoted", 0, 2)
+        else
+            whoi.util.notify(ply, "YouAlreadyVoted", 1, 2)
+        end
+    end
+end)

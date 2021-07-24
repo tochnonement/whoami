@@ -15,5 +15,8 @@ LANGUAGE["YouGuessing"] = "You are guessing"
 LANGUAGE["ChooseWord"] = "Choose a word"
 LANGUAGE["OpenModelMenu"] = "Change model"
 LANGUAGE["YouChangedModel"] = "You have changed the model!"
+LANGUAGE["YouVoted"] = "You have voted!"
+LANGUAGE["YouAlreadyVoted"] = "You have already voted!"
+LANGUAGE["Votes"] = "Votes"
 
 return LANGUAGE

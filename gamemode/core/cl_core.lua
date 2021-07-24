@@ -9,7 +9,7 @@ Email: tochonement@gmail.com
 
 whoi.bind.add("Vote", KEY_F1, BIND_RELEASE, function(self, pressed)
     if not pressed then
-        print("HELLO")
+        netez.send("Vote")
     end
 end)
 

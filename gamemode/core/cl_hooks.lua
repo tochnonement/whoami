@@ -49,11 +49,7 @@ function GM:HUDPaint()
         local m = string.match(st, "%d+")
         local s = string.match(st, ":%d+")
 
-        local _, textH = whoi.util.shadowText(m .. s, whoi.font.create("Roboto@48"), scrw / 2, logoSize, color_white, 1, 1, 2)
-
-        if not isLocalGuesser then
-            whoi.util.shadowText("Press F1 if he guessed", whoi.font.create("Roboto Condensed@36"), scrw / 2, logoSize + textH * 1.5, color_white, 1, 1, 1)
-        end
+        whoi.util.shadowText(m .. s, whoi.font.create("Roboto@48"), scrw / 2, logoSize, color_white, 1, 1, 2)
     end
 
     if statusText then
@@ -89,10 +85,13 @@ function GM:HUDPaint()
         end
     end
 
-    -- Binds
     local keySize = whoi.scale.height(48)
     local y = logoSize * 0.75 + logoSize / 2 + keySize * 2
+    local text = whoi.round.getVotes() .. "/" .. whoi.round.getRequiredVoteCount()
 
+    whoi.util.shadowText(L("Votes") .. ": " .. text, whoi.font.create("Roboto Condensed@24"), scrw - baseX, y, color_white, 2, 1)
+
+    -- Binds
     for _, bind in pairs(whoi.bind.getSortedTable()) do
         if bind.id == "Vote" and (isLocalGuesser or whoi.round.getState() ~= whoi.state.STARTED) then
             goto skip

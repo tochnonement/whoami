@@ -38,3 +38,13 @@ end
 function round.getRemainTime()
     return whoi.netvar.getGlobal("roundEndTime") - CurTime()
 end
+
+function round.getRequiredVoteCount()
+    local count = player.GetCount() - 1
+
+    return math.max(1, math.Round(count * 0.8))
+end
+
+function round.getVotes()
+    return whoi.netvar.getGlobal("voteCount")
+end
