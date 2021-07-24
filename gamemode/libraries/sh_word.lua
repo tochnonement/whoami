@@ -89,10 +89,12 @@ function word.load()
 
     for _, v in ipairs(gamemodePacks) do
         whoi.load.shared(gamemodePacksPath .. v)
+        whoi.util.print("Loaded pack: " .. v)
     end
 
     for _, v in ipairs(addonPacks) do
         whoi.load.shared(addonPacksPath .. v)
+        whoi.util.print("Loaded pack: " .. v)
     end
 end
 
