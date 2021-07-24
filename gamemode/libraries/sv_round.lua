@@ -135,6 +135,9 @@ function round.finish()
     timer.Remove("whoi.PickRandomWord")
     timer.Remove("whoi.AutoFinish")
 
+    -- Just to exclude any issues
+    netez.send(round.getWisher(), "CloseWordSelectionMenu")
+
     round.setGuesser(nil)
     round.setWisher(nil)
     round.setState(whoi.state.IDLE)
