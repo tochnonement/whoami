@@ -46,5 +46,5 @@ function round.getRequiredVoteCount()
 end
 
 function round.getVotes()
-    return whoi.netvar.getGlobal("voteCount")
+    return whoi.netvar.getGlobal("voteCount", 0)
 end
