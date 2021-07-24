@@ -11,7 +11,7 @@ netez.register("SelectWord")
 :AddField("string")
 :SetDelay(1)
 :SetCallback(function(ply, wordId)
-    if (whoi.round.wisher == ply) and whoi.word.get(wordId) then
+    if (whoi.round.getWisher() == ply) and whoi.word.get(wordId) then
         whoi.round.selectWord(wordId)
     end
 end)

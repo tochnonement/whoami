@@ -12,6 +12,13 @@ GM.Author = "tochonement"
 GM.Email = "tochonement@gmail.com"
 GM.Version = "0.0.1"
 
+-- ANCHOR Enums
+
+whoi.state = {}
+whoi.state.IDLE = 0
+whoi.state.PREPARING = 1
+whoi.state.STARTED = 2
+
 -- ANCHOR Load sequence
 
 whoi.load.auto("libraries/thirdparty/sh_pon.lua")
@@ -27,6 +34,7 @@ whoi.load.auto("libraries/cl_netvar.lua")
 whoi.load.auto("libraries/sv_netvar.lua")
 whoi.load.auto("libraries/sh_word.lua")
 whoi.load.auto("libraries/sh_queue.lua")
+whoi.load.auto("libraries/sh_round.lua")
 whoi.load.auto("libraries/sv_round.lua")
 
 whoi.load.auto("core/sv_core.lua")

@@ -8,14 +8,6 @@ Email: tochonement@gmail.com
 --]]
 
 whoi.round = whoi.round or {}
-whoi.round.state = {
-    NOT_ENOUGH_PLAYERS = 1,
-    WORD_CHOOSING = 2,
-    STARTED = 3
-}
-whoi.round.errors = {
-    notEnoughPlayers = 1
-}
 
 local round = whoi.round
 
@@ -33,13 +25,22 @@ local function getRandomExceptOne(tbl, exception)
     end
 end
 
+local function isReadyToStartRound()
+    local allowed = hook.Run("whoi.CanStartRound")
+
+    if #whoi.netvar.getReadyPlayers() < 2 then
+        return false
+    end
+
+    if allowed == false then
+        return false
+    end
+
+    return true
+end
+
 function round.start()
     local queue = whoi.playersQueue
-
-    -- We cannot start round with one player
-    if queue:Count() < 2 then
-        return false, round.errors.notEnoughPlayers
-    end
 
     -- Get the next player, who wil guess and remove him from queue
     local nextGuesser = queue:Pop()
@@ -48,8 +49,9 @@ function round.start()
     -- Get three random choices
     local choices = whoi.word.getRandom(3)
 
-    whoi.round.guesser = nextGuesser
-    whoi.round.wisher = makingWish
+    round.setGuesser(nextGuesser)
+    round.setWisher(makingWish)
+    round.setState(whoi.state.PREPARING)
 
     print("Guesser: ", nextGuesser)
     print("Wisher: ",  makingWish)
@@ -77,27 +79,35 @@ function round.selectWord(wordId)
     netez.send(respondents, "Notification", "Word chosen: " .. word:GetName(), 0, 2)
     netez.send(round.wisher, "CloseWordSelectionMenu")
 
+    round.setState(whoi.state.STARTED)
+
     timer.Remove("PickRandomWord")
 end
 
-function round.getRespondents()
-    local result = {}
+function round.setState(state)
+    return whoi.netvar.setGlobal("roundState", state)
+end
 
-    for _, ply in ipairs(player.GetAll()) do
-        if whoi.round.guesser ~= ply then
-            table.insert(result, ply)
-        end
-    end
+function round.setWisher(ply)
+    whoi.netvar.setGlobal("wisher", ply)
+end
 
-    return result
+function round.setGuesser(ply)
+    whoi.netvar.setGlobal("guesser", ply)
 end
 
 function round.finish()
     timer.Remove("PickRandomWord")
+
+    round.setGuesser(nil)
+    round.setWisher(nil)
+    round.setState(whoi.state.IDLE)
 end
 
-hook.Add("PlayerNetworkReady", "whoi.round.AutoStart", function()
-    if player.GetCount() > 1 then
-        round.start()
+timer.Create("whoi.round.AutoStart", 1, 0, function()
+    if round.getState() == whoi.state.IDLE then
+        if isReadyToStartRound() then
+            round.start()
+        end
     end
 end)
