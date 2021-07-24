@@ -45,3 +45,22 @@ function GM:HUDShouldDraw(name)
 
     return true
 end
+
+timer.Create("whoi.MusicLoop", 1, 0, function()
+    local music = whoi.music
+
+    if music and IsValid(music) then
+        if music:GetState() ~= GMOD_CHANNEL_PLAYING then
+            music:Play()
+        end
+    else
+        sound.PlayFile("sound/whoi/music.mp3", "noplay", function(station, error)
+            if IsValid(station) then
+                station:SetVolume(0.1)
+                station:Play()
+
+                whoi.music = station
+            end
+        end)
+    end
+end)
