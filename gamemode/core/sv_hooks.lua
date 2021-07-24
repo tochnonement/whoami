@@ -19,8 +19,9 @@ local models = {
     "models/player/Group01/male_09.mdl"
 }
 
-function GM:PlayerInitialSpawn(ply)
+function GM:PlayerNetworkReady(ply)
     whoi.playersQueue:Push(ply)
+    whoi.util.print("New player added to queue: " .. ply:Name())
 end
 
 function GM:PlayerDisconnected(ply)
@@ -29,6 +30,7 @@ function GM:PlayerDisconnected(ply)
     for index, member in ipairs(queue:Items()) do
         if member == ply then
             queue:Remove(index)
+            whoi.util.print("Player removed from queue: " .. ply:Name())
             break
         end
     end
