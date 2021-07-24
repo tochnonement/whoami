@@ -56,5 +56,3 @@ function GM:PlayerSetHandsModel(ply, ent)
         ent:SetBodyGroups(info.body)
     end
 end
-
--- PrintTable(whoi.playersQueue:Items())
