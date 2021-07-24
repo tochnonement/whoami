@@ -21,7 +21,25 @@ whoi.util.accessor(WORD, "name")
 whoi.util.accessor(WORD, "category")
 whoi.util.accessor(WORD, "imageUrl")
 
-function WORD:Translate(language, translate)
+function WORD:GetID()
+    return self.id
+end
+
+function WORD:Translate(langId, translate)
+    if CLIENT then
+        whoi.lang.addPhrase(langId, self.id, translate)
+    end
+
+    return self
+end
+
+function WORD:SetName(name)
+    if CLIENT then
+        whoi.lang.addPhrase("english", self.id, text)
+    end
+
+    self.name = name
+
     return self
 end
 
@@ -36,6 +54,14 @@ if CLIENT then
 
             return webIconId
         end
+    end
+
+    function WORD:GetName()
+        return L(self.id)
+    end
+
+    function WORD:GetCategory()
+        return L(self.category)
     end
 end
 

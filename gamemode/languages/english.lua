@@ -9,39 +9,9 @@ Email: tochonement@gmail.com
 
 local LANGUAGE = {}
 
--- SECTION Words
-
--- ANCHOR Vegetables
-LANGUAGE["cucumber"] = "Cucumber"
-LANGUAGE["tomato"] = "Tomato"
-
--- ANCHOR Food
-LANGUAGE["cottage"] = "Cottage cheese"
-
--- ANCHOR Animals
-LANGUAGE["cat"] = "Cat"
-LANGUAGE["dog"] = "Dog"
-LANGUAGE["monkey"] = "Monkey"
-LANGUAGE["chicken"] = "Chicken"
-
--- ANCHOR Superheroes
-LANGUAGE["batman"] = "Batman"
-
--- ANCHOR Half Life
-LANGUAGE["gman"] = "G-man"
-LANGUAGE["headcrab"] = "Headcrab"
-
--- ANCHOR Cartoon
-LANGUAGE["spongebob"] = "Sponge Bob"
-
--- ANCHOR Creatures
-LANGUAGE["zombie"] = "Zombie"
-LANGUAGE["werewolf"] = "Werewolf"
-LANGUAGE["dragon"] = "Dragon"
-LANGUAGE["elf"] = "Elf"
-LANGUAGE["orc"] = "Orc"
-LANGUAGE["goblin"] = "Goblin"
-
--- !SECTION
+LANGUAGE["WaitingForPlayers"] = "Waiting for players"
+LANGUAGE["IsPickingWord"] = "{player} is picking a word"
+LANGUAGE["YouGuessing"] = "You are guessing"
+LANGUAGE["ChooseWord"] = "Choose a word"
 
 return LANGUAGE

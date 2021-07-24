@@ -11,7 +11,7 @@ PANEL = {}
 
 function PANEL:Init()
     self.lblTitle = self:Add("DLabel")
-    self.lblTitle:SetText("Choose a word")
+    self.lblTitle:SetText(L("ChooseWord"))
     self.lblTitle:SetExpensiveShadow(1, ColorAlpha(color_black, 200))
     self.lblTitle:SetFont(whoi.font.create("Roboto@48"))
     self.lblTitle:SetTextColor(color_white)
@@ -19,7 +19,7 @@ function PANEL:Init()
     self.lblTitle:SizeToContentsY()
 
     self.lblTimer = self:Add("DLabel")
-    self.lblTimer:SetText("0:40")
+    self.lblTimer:SetText("")
     self.lblTimer:SetExpensiveShadow(1, ColorAlpha(color_black, 200))
     self.lblTimer:SetFont(whoi.font.create("Roboto Bk@36"))
     self.lblTimer:SetTextColor(color_white)

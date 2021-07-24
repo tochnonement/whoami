@@ -9,6 +9,10 @@ Email: tochonement@gmail.com
 
 local CATEGORY = "Vegetables"
 
+if CLIENT then
+    whoi.lang.addPhrase("russian", CATEGORY, "Овощи")
+end
+
 whoi.word.register("cucumber")
 :SetCategory(CATEGORY)
 :SetName("Cucumber")

@@ -8,6 +8,7 @@ Email: tochonement@gmail.com
 --]]
 
 local colorGueeser = Color(225, 177, 44)
+local colorHint = Color(249, 202, 36)
 local logo = whoi.webicon.create("https://i.imgur.com/TSrMR5J.png", "smooth mips")
 
 local hide = {
@@ -17,11 +18,15 @@ local hide = {
 
 function GM:HUDPaint()
     local scrw, scrh = ScrW(), ScrH()
-
-    -- Logo
+    local guesser = whoi.round.getGuesser()
+    local isLocalGuesser = guesser == LocalPlayer()
     local logoSize = whoi.scale.height(96)
     local logoMat = whoi.webicon.get(logo)
 
+    surface.SetDrawColor(0, 0, 0, 100)
+    surface.DrawRect(0, logoSize * 0.75, scrw, logoSize / 2)
+
+    -- Logo
     if logoMat then
         surface.SetMaterial(logoMat)
         surface.SetDrawColor(color_white)
@@ -33,20 +38,22 @@ function GM:HUDPaint()
     local statusText
 
     if roundState == whoi.state.IDLE then
-        statusText = "Waiting for players"
+        statusText = L("WaitingForPlayers")
     elseif roundState == whoi.state.PREPARING then
         local wisher = whoi.round.getWisher()
         if IsValid(wisher) then
-            statusText = whoi.round.getWisher():Name() .. " is picking a word"
-        else
-            statusText = "Wisher has leaved, word will be picked randomly"
+            statusText = L("IsPickingWord", {player = wisher})
         end
     else
         local st = string.FormattedTime(whoi.round.getRemainTime(), "%02i:%02i:%02i")
         local m = string.match(st, "%d+")
         local s = string.match(st, ":%d+")
 
-        statusText = m .. s
+        local _, textH = whoi.util.shadowText(m .. s, whoi.font.create("Roboto@48"), scrw / 2, logoSize, color_white, 1, 1, 2)
+
+        if not isLocalGuesser then
+            whoi.util.shadowText("Press F1 if he guessed", whoi.font.create("Roboto Condensed@36"), scrw / 2, logoSize + textH * 1.5, color_white, 1, 1, 1)
+        end
     end
 
     if statusText then
@@ -54,14 +61,13 @@ function GM:HUDPaint()
     end
 
     -- Who is guesser
-    local guesser = whoi.round.getGuesser()
     local word = whoi.round.word
     local iconSize = whoi.scale.height(64)
 
     if IsValid(guesser) then
         local x = logoSize / 2
 
-        if LocalPlayer() ~= guesser then
+        if not isLocalGuesser then
             if word then
                 word:PrepareImage()
 
@@ -79,7 +85,7 @@ function GM:HUDPaint()
                 whoi.util.shadowText(" (" .. word:GetName() .. ")", whoi.font.create("Roboto@36"), x, logoSize, color_white, 0, 1)
             end
         else
-            whoi.util.shadowText("You are guessing", whoi.font.create("Roboto@36"), x, logoSize, color_white, 0, 1)
+            whoi.util.shadowText(L("YouGuessing"), whoi.font.create("Roboto@36"), x, logoSize, color_white, 0, 1)
         end
     end
 end
