@@ -25,7 +25,7 @@ local function getRandomExceptOne(tbl, exception)
     end
 end
 
-local function isReadyToStartRound()
+local function checkReadyToContinue()
     local allowed = hook.Run("whoi.CanStartRound")
 
     if #whoi.netvar.getReadyPlayers() < 2 then
@@ -53,8 +53,8 @@ function round.start()
     round.setWisher(makingWish)
     round.setState(whoi.state.PREPARING)
 
-    print("Guesser: ", nextGuesser)
-    print("Wisher: ",  makingWish)
+    whoi.util.print("Guesser: ", nextGuesser:Name())
+    whoi.util.print("Wisher: ", makingWish:Name())
 
     -- Send to a wisher menu, where he can choose a word
     netez.send(makingWish, "ChooseWordMenu", choices)
@@ -77,7 +77,7 @@ function round.selectWord(wordId)
     local word = whoi.word.get(wordId)
 
     netez.send(respondents, "Notification", "Word chosen: " .. word:GetName(), 0, 2)
-    netez.send(round.wisher, "CloseWordSelectionMenu")
+    netez.send(round.getWisher(), "CloseWordSelectionMenu")
 
     round.setState(whoi.state.STARTED)
 
@@ -104,10 +104,20 @@ function round.finish()
     round.setState(whoi.state.IDLE)
 end
 
-timer.Create("whoi.round.AutoStart", 1, 0, function()
+timer.Create("whoi.round.Controller", 1, 0, function()
+    local isReadyToContinue = checkReadyToContinue()
+
     if round.getState() == whoi.state.IDLE then
-        if isReadyToStartRound() then
+        if isReadyToContinue then
             round.start()
+
+            whoi.util.print("Round auto-started!")
+        end
+    else
+        if not isReadyToContinue then
+            round.finish()
+
+            whoi.util.print("Round auto-finished, because conditions are not met!")
         end
     end
 end)
