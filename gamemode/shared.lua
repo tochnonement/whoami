@@ -10,7 +10,12 @@ Email: tochonement@gmail.com
 GM.Name = "Who am I?"
 GM.Author = "tochonement"
 GM.Email = "tochonement@gmail.com"
-GM.Version = "0.0.1"
+GM.Version = "1.0.0"
+
+if game.SinglePlayer() then
+    error("You can't play this gamemode in singleplayer!")
+    return
+end
 
 -- ANCHOR Enums
 
