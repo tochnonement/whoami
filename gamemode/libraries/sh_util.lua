@@ -78,4 +78,18 @@ if CLIENT then
             return draw.SimpleText(text, font, x, y, color, alignmentX, alignmentY)
         end
     end
+
+    do
+        function lib.drawKey(x0, y0, size, key)
+            local iconId = whoi.webicon.create("https://i.imgur.com/AYEhLpJ.png", "smooth mips")
+
+            whoi.webicon.draw(iconId, x0 - size / 2, y0 - size / 2, size, size)
+
+            draw.SimpleText(key, whoi.font.create("Roboto", math.ceil(size * 0.6)), x0, y0, color_black, 1, 1)
+        end
+    end
+else
+    function lib.notify(ply, text, type, length, ...)
+        netez.send(ply, "Notification", text, type, length, {...})
+    end
 end
