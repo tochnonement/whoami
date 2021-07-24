@@ -51,6 +51,18 @@ function netvar.getGlobal(key, fallback)
     return fallback
 end
 
+function netvar.getReadyPlayers()
+    local result = {}
+
+    for _, ply in ipairs(player.GetAll()) do
+        if ply.networkReady then
+            table.insert(result, ply)
+        end
+    end
+
+    return result
+end
+
 function ENTITY:GetNetVar(key, fallback)
     local publicStorage = netvar.public[self]
     local privateStorage = netvar.private[self]
@@ -90,6 +102,7 @@ do
             if ply == ply2 and not cmd:IsForced() then
                 hook.Run("PlayerNetworkReady", ply2)
                 hook.Remove("SetupMove", get_hook_name(ply2))
+                ply2.networkReady = true
             end
         end)
     end)
