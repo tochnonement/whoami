@@ -41,7 +41,7 @@ end
 
 netez.register("netvar:SetGlobal")
 :AddField("string")
-:AddField("any")
+:AddOptionalField("any")
 :SetCallback(function(key, value)
     netvar.global[key] = value
 end)
@@ -49,7 +49,7 @@ end)
 netez.register("netvar:Set")
 :AddField("entity")
 :AddField("string")
-:AddField("any")
+:AddOptionalField("any")
 :SetCallback(function(ent, key, value)
     netvar.data[ent] = netvar.data[ent] or {}
     netvar.data[ent][key] = value
