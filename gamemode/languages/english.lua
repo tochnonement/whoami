@@ -18,5 +18,6 @@ LANGUAGE["YouChangedModel"] = "You have changed the model!"
 LANGUAGE["YouVoted"] = "You have voted!"
 LANGUAGE["YouAlreadyVoted"] = "You have already voted!"
 LANGUAGE["Votes"] = "Votes"
+LANGUAGE["Vote"] = "Vote (if word was guessed)"
 
 return LANGUAGE

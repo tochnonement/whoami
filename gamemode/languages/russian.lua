@@ -3,7 +3,7 @@
 Author: tochonement
 Email: tochonement@gmail.com
 
-15.07.2021
+24.07.2021
 
 --]]
 
@@ -15,5 +15,9 @@ LANGUAGE["YouGuessing"] = "Вы угадываете"
 LANGUAGE["ChooseWord"] = "Выберите слово"
 LANGUAGE["OpenModelMenu"] = "Поменять модель игрока"
 LANGUAGE["YouChangedModel"] = "Вы изменили модель игрока!"
+LANGUAGE["YouVoted"] = "Вы проголосовали!"
+LANGUAGE["YouAlreadyVoted"] = "Вы уже голосовали!"
+LANGUAGE["Votes"] = "Голоса"
+LANGUAGE["Vote"] = "Проголосовать (если слово было угадано)"
 
 return LANGUAGE
