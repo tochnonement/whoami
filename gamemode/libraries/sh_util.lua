@@ -38,6 +38,16 @@ do
     end
 end
 
+do
+    local prefixText = "(WHOI) "
+    local prefixColor = Color(251, 197, 49)
+
+    function lib.print(...)
+        MsgC(prefixColor, prefixText, color_white, ...)
+        Msg("\n")
+    end
+end
+
 if CLIENT then
     do
         local function process(panel, class, callback)
