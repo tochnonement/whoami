@@ -19,7 +19,7 @@ local hide = {
 function GM:HUDPaint()
     local scrw, scrh = ScrW(), ScrH()
     local guesser = whoi.round.getGuesser()
-    local isLocalGuesser = guesser == LocalPlayer()
+    local isLocalGuesser = IsValid(guesser) and guesser == LocalPlayer() or false
     local logoSize = whoi.scale.height(96)
     local logoMat = whoi.webicon.get(logo)
 
@@ -63,10 +63,10 @@ function GM:HUDPaint()
     -- Who is guesser
     local word = whoi.round.word
     local iconSize = whoi.scale.height(64)
+    local baseX = logoSize / 2
 
     if IsValid(guesser) then
-        local x = logoSize / 2
-
+        local x = baseX
         if not isLocalGuesser then
             if word then
                 word:PrepareImage()
@@ -88,6 +88,24 @@ function GM:HUDPaint()
             whoi.util.shadowText(L("YouGuessing"), whoi.font.create("Roboto@36"), x, logoSize, color_white, 0, 1)
         end
     end
+
+    -- Binds
+    local keySize = whoi.scale.height(48)
+    local y = logoSize * 0.75 + logoSize / 2 + keySize * 2
+
+    for _, bind in pairs(whoi.bind.getSortedTable()) do
+        if bind.id == "Vote" and (isLocalGuesser or whoi.round.getState() ~= whoi.state.STARTED) then
+            goto skip
+        end
+
+        whoi.util.drawKey(baseX + keySize / 2, y, keySize, input.GetKeyName(bind.button))
+        whoi.util.shadowText(L(bind.id), whoi.font.create("Roboto Condensed@24"), baseX + keySize + 5, y, color_white, 0, 1)
+
+        y = y + keySize + 5
+
+        ::skip::
+    end
+
 end
 
 function GM:PostPlayerDraw(ply)

@@ -21,9 +21,13 @@ whoi.state.STARTED = 2
 
 -- ANCHOR Load sequence
 
+whoi.load.client("config/colors.lua")
+whoi.load.shared("config/shared.lua")
+
 whoi.load.auto("libraries/thirdparty/sh_pon.lua")
 whoi.load.auto("libraries/thirdparty/cl_circle.lua")
 whoi.load.auto("libraries/thirdparty/cl_blur.lua")
+whoi.load.auto("libraries/thirdparty/cl_bind.lua")
 
 whoi.load.auto("libraries/sh_util.lua")
 whoi.load.auto("libraries/cl_webicon.lua")
@@ -39,6 +43,7 @@ whoi.load.auto("libraries/sv_round.lua")
 whoi.load.auto("libraries/sh_lang.lua")
 
 whoi.load.auto("core/sv_core.lua")
+whoi.load.auto("core/cl_core.lua")
 whoi.load.auto("core/sv_hooks.lua")
 whoi.load.auto("core/cl_hooks.lua")
 whoi.load.auto("core/sv_net.lua")

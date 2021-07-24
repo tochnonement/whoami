@@ -18,3 +18,17 @@ netez.register("SelectWord")
         whoi.util.print(ply:Name() .. " selected word: " .. word.id)
     end
 end)
+
+netez.register("SelectModel")
+:AddField("uint")
+:SetDelay(1)
+:SetCallback(function(ply, index)
+    local modelPath = whoi.config.models[index]
+
+    if modelPath then
+        ply:SetModel(modelPath)
+
+        whoi.util.print(ply:Name() .. " changed his model to " .. modelPath)
+        whoi.util.notify(ply, "YouChangedModel", 0, 2)
+    end
+end)

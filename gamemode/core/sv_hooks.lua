@@ -7,18 +7,6 @@ Email: tochonement@gmail.com
 
 --]]
 
-local models = {
-    "models/player/Group01/male_01.mdl",
-    "models/player/Group01/male_02.mdl",
-    "models/player/Group01/male_03.mdl",
-    "models/player/Group01/male_04.mdl",
-    "models/player/Group01/male_05.mdl",
-    "models/player/Group01/male_06.mdl",
-    "models/player/Group01/male_07.mdl",
-    "models/player/Group01/male_08.mdl",
-    "models/player/Group01/male_09.mdl"
-}
-
 function GM:PlayerNetworkReady(ply)
     whoi.playersQueue:Push(ply)
     whoi.util.print("New player added to queue: " .. ply:Name())
@@ -37,7 +25,7 @@ function GM:PlayerDisconnected(ply)
 end
 
 function GM:PlayerSpawn(ply)
-    local model = table.Random(models)
+    local model = table.Random(whoi.config.models)
 
     ply:SetModel(model)
     ply:SetWalkSpeed(200)

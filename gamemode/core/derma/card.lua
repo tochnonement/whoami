@@ -7,8 +7,8 @@ Email: tochonement@gmail.com
 
 --]]
 
-local colorBg = Color(230, 206, 156)
-local colorOutline = Color(143, 116, 45)
+local colorBg = whoi.colors.main
+local colorOutline = whoi.colors.outline
 local colorHighlight = Color(241, 196, 15)
 local outlineStrength = 3
 
