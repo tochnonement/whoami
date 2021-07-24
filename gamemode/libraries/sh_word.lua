@@ -35,7 +35,7 @@ end
 
 function WORD:SetName(name)
     if CLIENT then
-        whoi.lang.addPhrase("english", self.id, text)
+        whoi.lang.addPhrase("english", self.id, name)
     end
 
     self.name = name
