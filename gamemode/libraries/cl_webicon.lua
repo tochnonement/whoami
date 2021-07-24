@@ -21,11 +21,20 @@ function webicon.getName(url)
     return crc .. format
 end
 
+function webicon.findInQueue(name)
+    for index, data in ipairs(webicon.queue) do
+        if (data.name == name) then
+            return data, index
+        end
+    end
+end
+
 function webicon.create(url, parameters)
     local name = webicon.getName(url)
     local successToLoad = webicon.load(name, parameters)
+    local foundInQueue = webicon.findInQueue(name)
 
-    if not successToLoad then
+    if not successToLoad and not foundInQueue then
         table.insert(webicon.queue, {
             url = url,
             name = name,
