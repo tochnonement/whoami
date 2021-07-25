@@ -89,7 +89,10 @@ function GM:HUDPaint()
     local y = logoSize * 0.75 + logoSize / 2 + keySize * 2
     local text = whoi.round.getVotes() .. "/" .. whoi.round.getRequiredVoteCount()
 
-    whoi.util.shadowText(L("Votes") .. ": " .. text, whoi.font.create("Roboto Condensed@24"), scrw - baseX, y, color_white, 2, 1)
+    if roundState == whoi.state.STARTED then
+        whoi.util.shadowText(L("Votes") .. ": " .. text, whoi.font.create("Roboto Condensed@24"), scrw - baseX, y, color_white, 2, 1)
+    end
+
 
     -- Binds
     for _, bind in pairs(whoi.bind.getSortedTable()) do

@@ -52,9 +52,9 @@ function webicon.download(url, name, successCallback, failCallback)
         if successCallback then
             successCallback()
         end
-    end, function()
+    end, function(error)
         if failCallback then
-            failCallback()
+            failCallback(error)
         end
     end)
 end
@@ -96,8 +96,8 @@ timer.Create("whoi.webicon.ProcessQueue", 0.2, 0, function()
 
         webicon.download(url, name, function()
             webicon.load(name, data.parameters)
-        end, function()
-            print("Failed to load: " .. url)
+        end, function(error)
+            print("Failed to load: ", url, "\n", error)
         end)
     end
 end)
