@@ -89,16 +89,38 @@ function word.load()
     local addonPacksPath = "whoami_packs/"
     local gamemodePacks = file.Find(gamemodePacksPath .. "*", "LUA")
     local addonPacks = file.Find(addonPacksPath .. "*", "LUA")
-
-    for _, v in ipairs(gamemodePacks) do
-        whoi.load.shared(gamemodePacksPath .. v)
-        whoi.util.print("Loaded pack: " .. v)
-    end
+    local customAddedCount = 0
 
     for _, v in ipairs(addonPacks) do
         whoi.load.shared(addonPacksPath .. v)
         whoi.util.print("Loaded pack: " .. v)
+
+        customAddedCount = customAddedCount + 1
     end
+
+    if customAddedCount == 0 then
+        whoi.util.print("No custom packs found, loading default ones...")
+
+        for _, v in ipairs(gamemodePacks) do
+            whoi.load.shared(gamemodePacksPath .. v)
+            whoi.util.print("Loaded pack: " .. v)
+        end
+
+        if SERVER then
+            local prefixText = "(WHOI) "
+            local link = "https://steamcommunity.com/workshop/filedetails/?id=2557061945"
+
+            hook.Add("PlayerNetworkReady", "whoi.NotifyThatNoPacks", function(ply)
+                ply:ChatPrint(prefixText .. " No custom word packs found, using default ones...")
+                ply:ChatPrint(prefixText .. " Check official word packs:")
+                ply:ChatPrint(link)
+            end)
+        end
+    end
+end
+
+function word.count()
+    return table.Count(word.storage)
 end
 
 function word.getRandom(count)
