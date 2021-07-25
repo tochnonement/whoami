@@ -1,8 +1,8 @@
-"gracer"
+"whoami"
 {
 	"base"		"base"
 	"title"		"Who am I?"
 	"category"	"fun"
-	"maps"		"^gm_|^gmod_|^phys_"
+	"maps"		"^whoami_"
 	"menusystem"	"1"
 }

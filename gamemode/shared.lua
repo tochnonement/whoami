@@ -54,6 +54,7 @@ whoi.load.auto("core/cl_hooks.lua")
 whoi.load.auto("core/sv_net.lua")
 whoi.load.auto("core/cl_net.lua")
 whoi.load.auto("core/sv_resource.lua")
+whoi.load.auto("core/sh_sam_support.lua")
 
 whoi.word.load()
 whoi.lang.init()
