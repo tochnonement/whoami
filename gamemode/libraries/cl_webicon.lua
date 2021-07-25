@@ -12,7 +12,12 @@ whoi.webicon.cache = whoi.webicon.cache or {}
 whoi.webicon.queue = whoi.webicon.queue or {}
 
 local webicon = whoi.webicon
-local basePath = "webicons/"
+local dirName = "webicons"
+local basePath = dirName .. "/"
+
+if not file.Exists(dirName, "DATA") then
+    file.CreateDir(dirName)
+end
 
 function webicon.getName(url)
     local crc = util.CRC(url)
