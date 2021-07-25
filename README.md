@@ -5,6 +5,8 @@ Guessing person should ask questions, which can be answered by "Yes" or "No".
 In the start of round respondents can tell the category of word, so it will be easier.
 Respondents should vote when a guessing person guessed the word.
 
+[Workshop Link](https://steamcommunity.com/sharedfiles/filedetails/?id=2557006893)
+
 # Support
 
 [!["Buy Me A Tea"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/tochnonement)
