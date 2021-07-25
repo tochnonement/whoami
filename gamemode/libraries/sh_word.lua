@@ -46,14 +46,17 @@ end
 if CLIENT then
     function WORD:PrepareImage()
         local url = self:GetImageUrl()
+        local webIconId
 
         if url then
-            local webIconId = whoi.webicon.create(url, "smooth mips")
-
-            self.image = webIconId
-
-            return webIconId
+            webIconId = whoi.webicon.create(url, "smooth mips")
+        else
+            webIconId = whoi.webicon.create("https://i.imgur.com/HuyqvUd.png", "smooth mips")
         end
+
+        self.image = webIconId
+
+        return webIconId
     end
 
     function WORD:GetName()
