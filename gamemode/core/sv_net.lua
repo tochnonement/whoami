@@ -36,7 +36,7 @@ end)
 netez.register("Vote")
 :SetDelay(1)
 :SetCallback(function(ply)
-    if (whoi.round.getGuesser() ~= ply) then
+    if (whoi.round.getGuesser() ~= ply) and (whoi.round.getState() == whoi.state.STARTED) then
         local bool = whoi.round.addVote(ply)
         if bool then
             whoi.util.notify(ply, "YouVoted", 0, 2)
