@@ -24,6 +24,12 @@ whoi.state.IDLE = 0
 whoi.state.PREPARING = 1
 whoi.state.STARTED = 2
 
+-- ANCHOR Team
+
+TEAM_PLAYER = 1
+
+team.SetUp(TEAM_PLAYER, "Player", color_white)
+
 -- ANCHOR Load sequence
 
 whoi.load.client("config/colors.lua")

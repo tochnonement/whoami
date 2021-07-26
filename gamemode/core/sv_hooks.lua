@@ -24,6 +24,11 @@ function GM:PlayerDisconnected(ply)
     end
 end
 
+function GM:PlayerInitialSpawn(ply)
+    ply:SetTeam(TEAM_PLAYER)
+    ply:SetNoCollideWithTeammates(true)
+end
+
 function GM:PlayerSpawn(ply)
     local model = table.Random(whoi.config.models)
 
