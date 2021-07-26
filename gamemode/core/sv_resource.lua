@@ -7,7 +7,7 @@ Email: tochonement@gmail.com
 
 --]]
 
-resource.AddSingleFile("sound/whoami/music.mp3")
+resource.AddWorkshop("2557006893")
 
 if game.GetMap() == "whoami_room" then
     resource.AddWorkshop("2557042894")
