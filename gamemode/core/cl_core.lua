@@ -22,3 +22,20 @@ whoi.bind.add("OpenModelMenu", KEY_F2, BIND_RELEASE, function(self, pressed)
         frame:LoadModels()
     end
 end)
+
+whoi.bind.add("OpenTutorial", KEY_F3, BIND_RELEASE, function(self, pressed)
+    if not pressed then 
+        whoi.openTutorial()
+    end
+end)
+
+-- Show tutorial to player if he never played this gamemode before
+
+hook.Add("PostGamemodeLoaded", "whoi.TutorialController", function()
+    local fileName = "whoami.txt"
+    if not file.Exists(fileName, "DATA") then
+        file.Write(fileName, "Thank you for playing :)\nThis used to check if you have played gamemode to show tutorial")
+
+        whoi.openTutorial()
+    end
+end)
